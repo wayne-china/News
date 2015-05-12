@@ -35,9 +35,9 @@ class Application(tornado.web.Application):
 
         handlers = [
             (r"/",MainHandler),
-	        (r"/subscribe",SubscribeHandler),
-            (r"/login",LoginHandler),
-            (r"/admin",AdminHandler)
+            (r"/",SubscribeHandler),
+            (r"/add",AddHandler),
+            (r"/(.*)/detail ",DetailHandler)
         ]
 
         tornado.web.Application.__init__(self, handlers, **settings)

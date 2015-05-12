@@ -1,6 +1,26 @@
 <html>
 <body>
-<p> admin panel </p>
+<header>
+<div class="container">
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="col-md-3">
+			<a class="btn btn-default" href="/logout">Log out</a>
+		</div>
+		<div class="col-md-3">
+			<a class="btn btn-default" href="/admin/add">Add news</a>
+		</div>
+		<div class="col-md-3"></div>
+	</div>
+		<div class="row text-center">
+			{% for news in news_timeline %}
+				<a href = "/{{ news["id"] }}/detail">{{ news["news_name"] }}</a>
+			{% end %}
+			{% module Paginator(page, page_size, results_count) %}
+		</div>
+</div>
+</header>
+
 </body>
 
 </html>
