@@ -37,6 +37,10 @@ class UserModel():
         sql = "SELECT * FROM %s WHERE id=%s" % (self.table_name,uid)
         return self.db.get(sql)
 
+    def get_user_by_name(self,username):
+        sql = "SELECT * FROM %s WHERE username= '%s' " % (self.table_name,username)
+        return self.db.get(sql)
+
 class EmailModel():
     def __init__(self,db):
         self.db = db

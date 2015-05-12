@@ -23,7 +23,7 @@ class BaseHandler(RequestHandler):
     @property
     def user_model(self):
         return news.UserModel(self.application.db)
-
+        
     @property
     def email_model(self):
         return news.EmailModel(self.application.db)
