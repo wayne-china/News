@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Custom CSS -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <script src="{{ static_url("js/bootstrap.min.js") }}"></script>
+    <link href="{{ static_url("css/bootstrap.css") }}" rel="stylesheet">
+
+   
+</head>
+
+
+<body>
+<div class="container">
+	 <header class="topbar cf">
+     <h1 class="brand">
+     <a href="http://next.36kr.com/" " class="logo" id="logo">PMnews</a>
+     </h1>
+     </header>
+
+    <div class="row text-center">
+        {% for news in news_timeline %}
+        <ul>
+	     <div class="">
+              <a  href = "{{ news["news_link"] }}">{{ news["news_name"] }}</a>
+         </div>
+        </ul>
+        {% end %}
+    {% module Paginator(current_page,5, results) %}
+    </div>
+</div>
+
+
+
+<footer class="footer" style="background-color:rgb(51, 46, 54)">
+    <div class="subscribe-email row text-center" style="color: rgb(255, 255, 255)">
+    <h3>您也可以通过电子邮件订阅每周的更新，不错过任何一个好产品</h3>
+    <div class="form-group">
+    <form  class="form-inline" method="post">
+      <input class="form-control"  placeholder="输入您的邮箱" required="required" type="email">
+      <input class="btn btn-default" name="commit" type="submit" value="订阅">
+    </form>  </div>
+    </div>
+  <div class="row cf">
+  	<div class="col-md-4"></div>
+    <div class="col-md-4 text-center" style="color: rgb(116, 127, 140)">
+      <p>© 2014-2015 <strong>PMnews</strong>. All Rights Reserved.</p>
+    </div>
+
+    <div class="col-md-4"></div>
+    </div>
+    
+  <div id="Intercom" class="hide"></div>
+  <script data-turbolinks-track="true" src="./NEXT   不错过任何一个新产品_files/faye.js"></script>
+</footer>
+
+
+
+
+</body>
+</html>
