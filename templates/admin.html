@@ -16,7 +16,7 @@
 			{% for news in news_timeline %}
 				<a href = "/{{ news["id"] }}/detail">{{ news["news_name"] }}</a>
 			{% end %}
-			{% module Paginator(page, page_size, results_count) %}
+			{#% module Paginator(current_page,5, results) %#}
 		</div>
 </div>
 </header>

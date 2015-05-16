@@ -1,4 +1,4 @@
-
+ 
 import sys
 reload(sys)
 sys.setdefaultencoding("utf8")
@@ -14,7 +14,7 @@ from tornado.options import define, options
 from lib.session import Session, SessionManager
 from uimodules import Paginator
 
-from handlers.handler import MainHandler,SubscribeHandler,LoginHandler,AdminHandler
+from handlers.handler import MainHandler,SubscribeHandler,LoginHandler,AdminHandler,AddHandler,DetailHandler,DeleteHandler
 
 define("port", default = 8080, type = int)
 define("mysql_host", default = "127.0.0.1")
@@ -37,9 +37,10 @@ class Application(tornado.web.Application):
             (r"/",MainHandler),
             (r"/subscribe",SubscribeHandler),
             (r"/login",LoginHandler),
-            (r"/admin",AdminHandler)
-            (r"/add",AddHandler),
-            (r"/(.*)/detail ",DetailHandler)
+            (r"/admin",AdminHandler),
+            (r"/admin/add",AddHandler),
+            (r"/(.*)/delete",DeleteHandler),
+            (r"/(.*)/detail",DetailHandler)
         ]
 
         tornado.web.Application.__init__(self, handlers, **settings)

@@ -1,7 +1,9 @@
 from tornado.web import RequestHandler
-from handlers.base import BaseHandler
+from base import BaseHandler
 import requests
 import tornado
+import requests
+import re
 
 
 def do_login(self,user_id):
@@ -43,10 +45,10 @@ class MainHandler(BaseHandler):
 class LoginHandler(BaseHandler):
     def get(self,template_variables = {}):
 		user_info = self.get_current_user() 
-		if user_info:
-			self.redirect("/")
-		else:
-			self.render("login.html",**template_variables)
+		# if user_info:
+		# 	self.redirect("/")
+		# else:
+		self.render("login.html",**template_variables)
 
     def post(self,template_variables = {}):
         username = self.get_argument("username")
@@ -59,8 +61,8 @@ class LoginHandler(BaseHandler):
         userinfo = self.user_model.login(username,secure_password)
         if userinfo:
             do_login(self,userinfo["id"])
-            template_variables["username"] = userinfo["username"]
-            self.render("admin.html",**template_variables) 
+            # template_variables["username"] = userinfo["username"]
+            self.redirect("/admin",**template_variables) 
         else:
             self.write("Password wrong!")
        # self.redirect("/login")
@@ -71,7 +73,8 @@ class AdminHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self,template_variables = {}):
         news_timeline = self.news_model.get_all_news()
-        self.render("admin.html")
+        template_variables["news_timeline"] = news_timeline
+        self.render("admin.html",**template_variables)
 
 
 class AddHandler(BaseHandler):
@@ -85,21 +88,33 @@ class AddHandler(BaseHandler):
         news_link = self.get_argument("link")
         try:
             self.news_model.add_news(news_name,news_link)
-            return self.write("success")
+            return self.redirect("/admin")
         except Exception,e:
             print (e)
 
-class Detailhandler(BaseHandler):
+class DetailHandler(BaseHandler):
     @tornado.web.authenticated
-    def get(self,template_variables = {}):
-        if(re.match(r'^\d+$', uid)):
-            news = self.user_model.get_news_by_uid(uid)
+    def get(self,news_id,template_variables = {}):
+        if(re.match(r'^\d+$', news_id)):
+            news = self.news_model.get_news_by_id(news_id)
         else:
             return self.write("news not found")
         template_variables["news"] = news
         self.render("detail.html",**template_variables)
 
+class DeleteHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self,news_id,template_variables = {}):
+        if(re.match(r'^\d+$',news_id)):
+            try:
+                self.news_model.del_news_by_id(news_id)
+            except Exception.e:
+                print(e)
+            self.redirect("/admin")
 
+        else:
+            return self.write("news not found")
+        
 
 class SubscribeHandler(BaseHandler):
     pass

@@ -10,10 +10,22 @@ class NewsModel():
         sql = "SELECT * FROM %s  ORDER BY id DESC " % (self.table_name)
         return self.db.query(sql)
 
+    def add_news(self,news_name,news_link):
+        sql = "INSERT INTO %s ( news_name,news_link ) VALUES ( '%s','%s')" % (self.table_name,news_name,news_link)
+        return self.db.execute(sql)
+
     def get_news_by_page(self,begin,size):
         sql = "SELECT * FROM %s  ORDER BY id DESC LIMIT %s,%s " % (self.table_name,begin,size)
         return self.db.query(sql)
 
+    def get_news_by_id(self,id):
+        sql = "SELECT * FROM %s WHERE id = '%s' " % (self.table_name,id)
+        return self.db.get(sql)
+
+    def del_news_by_id(self,id):
+        sql = "DELETE FROM %s WHERE id = '%s' " % (self.table_name,id)
+        return self.db.execute(sql)
+ 
     def get_all_news_name(self):
         sql = "SELECT news_name FROM %s ORDER BY id DESC" % (self.table_name)
         return self.db.query(sql)
@@ -33,7 +45,7 @@ class UserModel():
         sql = "SELECT * FROM %s WHERE username = '%s' AND password = '%s' " % (self.table_name,username,password)
         return self.db.get(sql)
 
-    def get_user_by_uid(self,uid):
+    def get_user_by_uid(self,id):
         sql = "SELECT * FROM %s WHERE id=%s" % (self.table_name,uid)
         return self.db.get(sql)
 
