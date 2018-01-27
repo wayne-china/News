@@ -42,11 +42,11 @@ class UserModel():
         self.table_name = "user"
 
     def login(self,username,password):
-        sql = "SELECT * FROM %s WHERE username = '%s' AND password = '%s' " % (self.table_name,username,password)
+        sql = "SELECT * FROM %s WHERE BINARY username = '%s' AND password = '%s' " % (self.table_name,username,password)
         return self.db.get(sql)
 
-    def get_user_by_uid(self,id):
-        sql = "SELECT * FROM %s WHERE id=%s" % (self.table_name,uid)
+    def get_user_by_id(self,id):
+        sql = "SELECT * FROM %s WHERE id=%s" % (self.table_name,id)
         return self.db.get(sql)
 
     def get_user_by_name(self,username):
@@ -60,4 +60,5 @@ class EmailModel():
 
     def add_new_email(self,email):
         sql = "INSERT INTO %s ( email ) VALUES ( '%s' )" % (self.table_name,email)
+        return self.db.execute(sql)
  

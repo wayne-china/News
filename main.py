@@ -14,7 +14,8 @@ from tornado.options import define, options
 from lib.session import Session, SessionManager
 from uimodules import Paginator
 
-from handlers.handler import MainHandler,SubscribeHandler,LoginHandler,AdminHandler,AddHandler,DetailHandler,DeleteHandler
+from handlers.handler import MainHandler,LoginHandler,\
+                     AdminHandler,AddHandler,DetailHandler,DeleteHandler,LogOutHandler
 
 define("port", default = 8080, type = int)
 define("mysql_host", default = "127.0.0.1")
@@ -34,9 +35,9 @@ class Application(tornado.web.Application):
         }
 
         handlers = [
-            (r"/",MainHandler),
-            (r"/subscribe",SubscribeHandler),
+            (r"/",MainHandler), 
             (r"/login",LoginHandler),
+            (r"/logout",LogOutHandler),
             (r"/admin",AdminHandler),
             (r"/admin/add",AddHandler),
             (r"/(.*)/delete",DeleteHandler),

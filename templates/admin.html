@@ -1,7 +1,5 @@
-<html>
-<body>
-<header>
-<div class="container">
+{% extends 'base.html' %}
+{% block content %}
 	<div class="row">
 		<div class="col-md-3"></div>
 		<div class="col-md-3">
@@ -18,9 +16,4 @@
 			{% end %}
 			{#% module Paginator(current_page,5, results) %#}
 		</div>
-</div>
-</header>
-
-</body>
-
-</html>
+{% end %}

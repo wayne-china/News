@@ -1,7 +1,5 @@
-<html>
-<body>
-<header>
-<div class="container">
+{% extends 'base.html' %}
+{% block content %}
 	<div class="row">
 		<div class="col-md-3"></div>
 		<div class="col-md-3">
@@ -16,9 +14,4 @@
 				<p>{{ news["news_name"] }}</p>
 				<p>{{ news["news_link"] }}</p>
 		</div>
-</div>
-</header>
-
-</body>
-
-</html>
+{% end %}

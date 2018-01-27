@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Custom CSS -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <script src="{{ static_url("js/bootstrap.min.js") }}"></script>
+    <link href="{{ static_url("css/bootstrap.css") }}" rel="stylesheet">
+</head>
+
+<body>
+
+	<div class="container">
+	 <header class="topbar cf">
+     <h1 class="brand">
+     <a href="#" " class="logo" id="logo">PMnews</a>
+     </h1>
+     </header>
+ 	</div>
+    <div class="container">
+    	{% block content %}{% end %}
+    </div>
+        {% block footer %}{% end %}
+
+
+</body>
+</html>

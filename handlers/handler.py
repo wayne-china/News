@@ -6,8 +6,15 @@ import requests
 import re
 
 
+def validateEmail(email):
+    if len(email) > 7:
+        if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", email) != None:
+            return 1
+    return 0
+
+
 def do_login(self,user_id):
-    user_info = self.user_model.get_user_by_uid(user_id)
+    user_info = self.user_model.get_user_by_id(user_id)
     username = user_info["username"]
     password = user_info["password"]
     try:
@@ -41,14 +48,25 @@ class MainHandler(BaseHandler):
     	template_variables["results"] = results
     	self.render("index.html",**template_variables)
 
+    def post(self,template_variables = {}):
+        email = self.get_argument("email")
+        if validateEmail(email):
+            try:
+                self.email_model.add_new_email(email)
+                return self.redirect("/")
+            except Exception,e:
+                print (e)
+        else:
+            return self.write("wrong email address")
+
 
 class LoginHandler(BaseHandler):
     def get(self,template_variables = {}):
-		user_info = self.get_current_user() 
-		# if user_info:
-		# 	self.redirect("/")
-		# else:
-		self.render("login.html",**template_variables)
+        user_info = self.get_current_user() 
+        if user_info:
+            self.redirect("/admin")
+        else:
+            return self.render("login.html",**template_variables)
 
     def post(self,template_variables = {}):
         username = self.get_argument("username")
@@ -66,6 +84,11 @@ class LoginHandler(BaseHandler):
         else:
             self.write("Password wrong!")
        # self.redirect("/login")
+
+class LogOutHandler(BaseHandler):
+    def get(self):
+        login_out(self)
+        return self.redirect("/admin")
 
 
 
@@ -116,8 +139,15 @@ class DeleteHandler(BaseHandler):
             return self.write("news not found")
         
 
-class SubscribeHandler(BaseHandler):
-    pass
-# 	def post(self):
-# 		self.render("")
+# class SubscribeHandler(BaseHandler):
+#     def post(self,template_variables = {}):
+#         email = self.get_argument("email")
+#         if validateEmail(email):
+#             try:
+#                 self.email_model.add_new_email(email)
+#                 return self.redirect("/admin")
+#             except Exception,e:
+#                 print (e)
+#         else:
+#             return self.write("wrong email address")
 
